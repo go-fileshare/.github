@@ -19,10 +19,11 @@ already has NFS, a browser or a phone has HTTP. Running four servers, each with
 its own configuration file and its own idea of who "alice" is, is a way to get
 three of them subtly wrong.
 
-So this is one binary and one file. The images are
-[`go-filesystems`](https://github.com/go-filesystems) drivers — FAT32, exFAT,
-ext4, NTFS, ISO 9660, SquashFS, HFS+ — opened once and shared by every
-protocol behind one lock.
+So this is one binary and one file. The images are [`go-filesystems`](https://github.com/go-filesystems) drivers —
+FAT32, exFAT, ext4, NTFS, **UFS**, ISO 9660, SquashFS, HFS+ — opened once and
+shared by every protocol behind one lock. That is every driver in the
+organisation of the one shape; APFS, Btrfs, XFS and ZFS open a *disk* image and
+pick a partition instead, which is a different question about what a share is.
 
 ## The protocols do not agree about who is asking
 
