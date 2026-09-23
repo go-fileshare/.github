@@ -60,6 +60,8 @@ describes its directory once.
 
 ## Links
 
+- 📖 Docs — <https://go-fileshare.github.io/docs/>
+- 🌐 Site — <https://go-fileshare.github.io/>
 - 🎨 Brand assets — <https://github.com/go-fileshare/brand>
 
 ---
