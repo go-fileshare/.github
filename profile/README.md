@@ -1,7 +1,7 @@
 <p align="center"><img src="https://raw.githubusercontent.com/go-fileshare/brand/main/social/go-fileshare.png" alt="go-fileshare" width="640"></p>
 
 <h1 align="center">go-fileshare</h1>
-<p align="center">One disk image, served over SMB, NFS, WebDAV and SFTP — the same users, the same per-share access, from one configuration file.</p>
+<p align="center">One disk image, served over SMB, NFS, WebDAV, SFTP and S3 — the same users, the same per-share access, from one configuration file.</p>
 <p align="center">
   <img src="https://img.shields.io/badge/Go-1.26-00ADD8?style=flat-square&logo=go&logoColor=white">
   <img src="https://img.shields.io/badge/license-BSD--3--Clause-0A6E96?style=flat-square">
@@ -39,6 +39,7 @@ a limitation here:
 | **SMB** | NTLMv2 — the password never crosses the wire |
 | **WebDAV** | HTTP Basic, or a **bearer token** an identity provider signed |
 | **SFTP** | a public key, or an SSH certificate from an authority you trust |
+| **S3** | a **SigV4 signature** — an HMAC computed from the secret, so the directory must HOLD the password rather than merely check it |
 | **NFSv3** | **nothing at all** — `AUTH_UNIX` is a claim the client makes about itself |
 | **NFS + Kerberos** | `sec=krb5` — a principal a **ticket proves**, realm included |
 
@@ -48,6 +49,18 @@ and a protocol that hands photos to whoever connects cannot both be honoured,
 and quietly widening access is the worse of the two failures. `fileshare check`
 prints the whole matrix — every share against every protocol, and every person
 against every protocol — before anything is restarted.
+
+**A person can exist only at an identity provider.** An `oidc` block makes
+WebDAV accept a **bearer token** — verified by
+[`go-authn/oidc`](https://github.com/go-authn/oidc) for signature, issuer,
+audience and expiry — and the challenge it sends offers Basic *and* Bearer, so
+a client picks the one it can answer. Only WebDAV: SMB signs with NTLMv2, SFTP
+with a key, S3 with SigV4, and none of them has a field a token fits in.
+
+⛔ A token says who the provider thinks somebody is. It does not say this
+server has a share for them: a valid token for a name no source here knows is
+refused, because the safe reading of *I do not know you* is not *you are
+allowed*. A site where the provider IS the directory says `trust_all = true`.
 
 **That refusal used to be permanent.** A `kerberos` block gives NFS something
 to check, and a restricted share is then exported over it like anywhere else:
