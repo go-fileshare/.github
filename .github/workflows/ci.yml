@@ -38,7 +38,9 @@ jobs:
             # fails at random is a lane people learn to ignore, which is worse
             # than not having it.
             code=000
-            for attempt in 1 2 3; do
+            # `_`, not `attempt`: the counter is never read, and shellcheck
+            # says so (SC2034) now that actionlint runs over this file.
+            for _ in 1 2 3; do
               code=$(curl -sS -o /dev/null -w '%{http_code}' -L --max-time 25 "$u" || echo 000)
               case "$code" in 2*|3*) break ;; esac
               sleep 3
