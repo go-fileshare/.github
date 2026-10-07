@@ -38,7 +38,7 @@ a limitation here:
 |---|---|
 | **SMB** | NTLMv2 — the password never crosses the wire |
 | **WebDAV** | HTTP Basic, or a **bearer token** an identity provider signed |
-| **SFTP** | a public key, or an SSH certificate from an authority you trust |
+| **SFTP** | a public key, or an SSH certificate from an authority you trust — with `ssh_domains`, only where its [EuroHPC domain grant](https://go-fileshare.github.io/docs/latest/protocols/sftp/#certificates-meant-for-this-host-the-domain-grant) names this host, and only from the addresses it is pinned to |
 | **S3** | a **SigV4 signature** — an HMAC computed from the secret, so the directory must HOLD the password rather than merely check it |
 | **NFSv3** | **nothing at all** — `AUTH_UNIX` is a claim the client makes about itself |
 | **NFS + Kerberos** | `sec=krb5` — a principal a **ticket proves**, realm included |
