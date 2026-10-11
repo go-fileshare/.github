@@ -80,6 +80,9 @@ have an `alice`, and only one of them is yours.
 | | Repo | |
 |---|---|---|
 | <img src="https://raw.githubusercontent.com/go-fileshare/brand/main/avatar/go-fileshare-fileshare.png" width="36"> | [`fileshare`](https://github.com/go-fileshare/fileshare) | The server: one image, four protocols, one configuration. `go install github.com/go-fileshare/fileshare@latest` |
+| | [`portal`](https://github.com/go-fileshare/portal) | The server behind the UIs: OIDC login, an encrypted session, a token per fileshare server, the admin API and WebDAV passed through, files served inert. |
+| | [`console`](https://github.com/go-fileshare/console) | The admin console: shares, grants, volumes, across every server a portal knows. In a browser, or native. |
+| | [`explorer`](https://github.com/go-fileshare/explorer) | The file explorer: browse, upload in pieces, download, rename, copy, delete. In a browser behind the portal. |
 
 ## Where the people come from
 
